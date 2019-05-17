@@ -1,6 +1,8 @@
 # Grunt Email Design Workflow
 
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/) 
+_From [Lee Munroe](https://github.com/leemunroe/grunt-email-workflow). Slightly modified to support AWS credential profiles. Will evolve._
+
+[![Built with Grunt](https://gruntjs.com/cdn/builtwith.png)](http://gruntjs.com/)
 
 Designing and testing emails is a pain. HTML tables, inline CSS, various devices and clients to test, and varying support for the latest web standards.
 
@@ -26,7 +28,7 @@ You may already have these installed on your system. If not, you'll have to inst
 * Grunt-cli and Grunt (`npm install grunt-cli -g`)
 * [Mailgun](http://www.mailgun.com) (optional) - Sends the email
 * [Litmus](https://litmus.com) (optional) - Tests the email across all clients/browsers/devices
-* [Rackspace Cloud](http://www.rackspace.com/cloud/files/) (optional) - Uses Cloud Files as a CDN
+* S3 (optional) - Uses S3 as a CDN
 
 ## Getting started
 
@@ -37,7 +39,7 @@ If you haven't used [Grunt](http://gruntjs.com/) before check out Chris Coyier's
 Clone this repo, cd to the directory, run `npm install` to install the necessary packages.
 
 ```sh
-git clone https://github.com/leemunroe/grunt-email-workflow.git
+git clone https://github.com/uncorkedstudios/grunt-email-workflow.git
 cd grunt-email-workflow
 npm install
 ```
@@ -54,7 +56,7 @@ Run `grunt` in command line and check out your `/dist` folder to see your compil
 We encourage you __not__ to store sensitive data in your git repository. If you must, please look into [git-encrypt](https://github.com/shadowhand/git-encrypt) or some other method of encrypting your configuration secrets.
 
 1. Create a file `secrets.json` in your project root.
-2. Paste the following sample code in `secrets.json` and enter the appropriate credentials for the services you want to connect with. 
+2. Paste the following sample code in `secrets.json` and enter the appropriate credentials for the services you want to connect with.
 
 If you don't use or need these services **it's ok to leave these defaults**, but they should exist for this to work.
 
@@ -109,11 +111,11 @@ Handlebars and Assemble are used for templating.
 
 `/layouts` contains the standard header/footer HTML wrapper markup. You most likely will only need one layout template, but you can have as many as you like.
 
-`/emails` is where your email content will go. To start you off I've included example transactional emails based on my [simple HTML email template](https://github.com/leemunroe/html-email-template).
+`/emails` is where your email content will go. To start you off I've included example transactional emails based on [simple HTML email template](https://github.com/leemunroe/html-email-template).
 
 `/data` contains _optional_ .yml or .json data files that can be used in your templates. It's a good way to store commonly used strings and variables. See `/data/default.yml` and `/partials/follow_lee.hbs` for an example.
 
-`/partials` contains _optional_ .hbs files that can be thought of like includes. To use a partial, for example `/partials/follow_lee.hbs` you would use the following code in your emails template:
+`/partials` contains _optional_ .hbs files that can be thought of like includes. To use a partial, for example `/partials/follow_ucs.hbs` you would use the following code in your emails template:
 
 ```hbs
 {{> follow_lee }}
@@ -142,7 +144,7 @@ Alternatively run `grunt serve`. This will check for any changes you make to you
 
 ### Browser-based previews
 
-In terminal, run `grunt serve`. 
+In terminal, run `grunt serve`.
 
 * This will run the default tasks `grunt` + the `watch` task will be initiated
 * A preview UI will automagically open on [http://localhost:4000](http://localhost:4000) and you can review your templates
